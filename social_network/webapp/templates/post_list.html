@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Новости{% endblock %}
+{% block content %}
+        <div class="card-group">
+            {% for post in post_list %}
+                <div class="card">
+                    <div class="card-body">
+                    <a href="{% url 'webapp:post_detail' post.pk %}"><h5 class="card-title">{{ post.title }}</h5></a>
+                    <p class="card-text">{{ post.author }}</p>
+                    <p class="card-text">{{ post.created_at }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+{% endblock %}
