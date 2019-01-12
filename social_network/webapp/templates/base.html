@@ -22,12 +22,12 @@
         <ul class="navbar-nav container">
 
                   <li class="nav-item"><a class="nav-link" href="{% url 'webapp:post_list' %}">Новости</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#">Пользователи</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{% url 'webapp:user_list' %}">Пользователи</a></li>
 
                     {% if user.is_authenticated %}
                         <li class="nav-item navbar-text">Привет, {{ user.username }}!</li>
                         <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link">Выход</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Личный кабинет</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'webapp:user_detail' request.user.client.pk %}">Личный кабинет</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'webapp:post_create' %}">Добавить новость</a></li>
                     {% else %}
                         <li class="nav-item"><a href="{% url 'login' %}" class="nav-link">Вход</a></li>

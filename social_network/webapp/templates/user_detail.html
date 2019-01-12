@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}{% endblock %}
+{% block content %}
+    <div class="card border">
+        <div class="card-header">
+            {% if request.user == userinfo.user %}
+            <h2>Личный кабинет</h2>
+            {% else %}
+            <h2>Страница пользователя</h2>
+            {% endif %}
+            Имя: {{ userinfo.user }}
+        </div>
+        <div class="card-body">
+
+            <span class="card-img"><img class="card-img-top" src="{{ userinfo.photo.url }}" alt="Card image cap"></span>
+
+            <p class="card-text"> Телефон: {{ userinfo.phone }}</p>
+            <p class="card-text"> Почта: {{ userinfo.email }}</p>
+            <p class="card-text"> Друзья пользователя:
+            <br>
+                {% for friend in userinfo.friends.all %}
+                    {{ friend.username }}
+                    <br>
+                {% endfor %}
+
+            </p>
+            <p>
+            Список постов пользователя:<br>
+            {% for post in userinfo.user.post_author.all %}
+            {{ post.title }}
+                    <br>
+            {% endfor %}
+            </p>
+            {% if request.user == userinfo.user %}
+            <a href="{% url 'webapp:user_update' userinfo.pk %}">Редактировать</a>
+            {% endif %}
+        </div>
+{% endblock %}

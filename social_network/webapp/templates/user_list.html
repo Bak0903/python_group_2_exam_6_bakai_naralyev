@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}{% endblock %}
+{% block content %}
+    {% for user in userinfo_list %}
+        <div class="card mt-4 border">
+
+                <a href="{% url 'webapp:user_detail' user.pk %}"><h3>{{ user.user }}</h3></a>
+
+        </div>
+    {% endfor %}
+{% endblock %}

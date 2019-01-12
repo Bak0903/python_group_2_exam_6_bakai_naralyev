@@ -1,7 +1,8 @@
 from django.shortcuts import reverse,redirect, get_object_or_404, Http404
 from django.views.generic import DetailView, CreateView, UpdateView, ListView
 from webapp.models import Userinfo, Post
-from webapp.form import PostForm
+from django.urls import reverse_lazy
+from webapp.form import PostForm, UserForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
@@ -59,3 +60,31 @@ def delete_post(request, post_id):
         return redirect('webapp:post_list')
     else:
         return redirect('webapp:post_detail', post_id)
+
+
+class UserListView(ListView):
+    model = Userinfo
+    template_name = 'user_list.html'
+
+
+class UserDetailView(DetailView):
+    model = Userinfo
+    template_name = 'user_detail.html'
+
+
+class UserUpdateView(LoginRequiredMixin, UpdateView):
+    model = Userinfo
+    template_name = 'user_update.html'
+    form_class = UserForm
+
+    def get_object(self, queryset = Userinfo.objects.all()):
+        object = super(UserUpdateView, self).get_object()
+
+        if object.user == self.request.user:
+            return object
+
+        else:
+            raise Http404()
+
+    def get_success_url(self):
+        return reverse('webapp:user_detail', kwargs={'pk': self.object.pk})
