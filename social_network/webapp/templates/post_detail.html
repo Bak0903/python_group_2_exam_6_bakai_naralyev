@@ -8,10 +8,10 @@
         <h5 class="card-title">{{ post.title }}</h5>
         <p class="card-text">{{ post.text }}</p>
 
-
+        {% if request.user == post.author %}
             <button type="button" class="btn btn-dark float-right" data-toggle="modal" data-placement="top" title="Удалить" data-target="#Modal_{{ post.pk }}">Удалить</button>
             <a href="{% url 'webapp:post_update' post.pk %}" class="btn btn-primary float-right mr-2">Редактировать</a>
-
+        {% endif %}
       </div>
     </div>
 
