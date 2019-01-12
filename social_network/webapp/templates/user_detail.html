@@ -11,10 +11,14 @@
             Имя: {{ userinfo.user }}
         </div>
         <div class="card-body">
+             {% if userinfo.photo %}
+            <span class="card-img"><img src="{{ userinfo.photo.url }}" alt="Card image cap"></span>
+              {% endif %}
+            <p class="card-text" id="phone"> Телефон<input id="add-item-btn" type="button" value="Показать телефон"></p>
 
-            <span class="card-img"><img class="card-img-top" src="{{ userinfo.photo.url }}" alt="Card image cap"></span>
 
-            <p class="card-text"> Телефон: {{ userinfo.phone }}</p>
+
+
             <p class="card-text"> Почта: {{ userinfo.email }}</p>
             <p class="card-text"> Друзья пользователя:
             <br>
@@ -27,7 +31,7 @@
             <p>
             Список постов пользователя:<br>
             {% for post in userinfo.user.post_author.all %}
-            {{ post.title }}
+            <a href="{% url 'webapp:post_detail' post.pk %}">{{ post.title }}</a>
                     <br>
             {% endfor %}
             </p>
@@ -35,4 +39,17 @@
             <a href="{% url 'webapp:user_update' userinfo.pk %}">Редактировать</a>
             {% endif %}
         </div>
+
+
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+        let button = document.getElementById('add-item-btn');
+        let element = document.getElementById("phone");
+        button.onclick = function() {
+            element.innerText = "Телефон: {{ userinfo.phone }}";
+        }
+    </script>
 {% endblock %}

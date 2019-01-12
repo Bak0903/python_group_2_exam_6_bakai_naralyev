@@ -8,8 +8,6 @@ class Userinfo(models.Model):
     photo = models.ImageField(null=True, blank=True, verbose_name='Фотография')
     friends = models.ManyToManyField(User, related_name='clients_friend', verbose_name='друзья')
 
-    def __str__(self):
-        return self.user.get_full_name()
 
 
 class Post(models.Model):
